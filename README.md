@@ -55,4 +55,4 @@ This system addresses the need for an efficient way to manage inventory and orde
     * Create a new database for the inventory system (if you haven't already).
     * Execute the SQL scripts located in the `deliverables/database_schema` directory (specifically `schema.sql`) to create the necessary tables and define the schema.
     * your schema should look like this
-    ![ERD](schema.png)
+    ![ERD](AMALITECH_LABS\inventory_system\deliverables\database_schema\schema.png)
