@@ -54,3 +54,5 @@ This system addresses the need for an efficient way to manage inventory and orde
     * Connect to your MySQL server using a MySQL client.
     * Create a new database for the inventory system (if you haven't already).
     * Execute the SQL scripts located in the `deliverables/database_schema` directory (specifically `schema.sql`) to create the necessary tables and define the schema.
+    * your schema should look like this
+    ![ERD](schema.png)
