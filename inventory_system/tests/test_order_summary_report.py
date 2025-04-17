@@ -8,8 +8,8 @@ def test_order_summary_report():
         return
 
     try:
-        schema_path = r"AMALITECH_LABS\inventory_system\deliverables\database_schema\schema.sql"
-        report_script_path = r"AMALITECH_LABS\inventory_system\deliverables\report_summaries\order_summary_report.sql"
+        schema_path = "../deliverables/database_schema/schema.sql"
+        report_script_path = "../deliverables/report_summaries/order_summary_report.sql"
 
         # Execute schema to ensure tables exist
         execute_sql_script(db_connection, schema_path)

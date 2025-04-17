@@ -35,7 +35,7 @@ BEGIN
         HAVING SUM(o.total_amount) <= medium_spender_threshold
     );
 
-    -- You can add a default category for new customers if needed
+    -- Adding a category for new customers
     UPDATE customers
     SET spending_category = 'New Customer'
     WHERE spending_category IS NULL;

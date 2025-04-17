@@ -8,8 +8,8 @@ def test_low_stock_products_view():
         return
 
     try:
-        schema_path = r"AMALITECH_LABS\inventory_system\deliverables\database_schema\schema.sql"
-        low_stock_view_path = r"AMALITECH_LABS\inventory_system\deliverables\views\low_stock_products_view.sql"
+        schema_path = "../deliverables/database_schema/schema.sql"
+        low_stock_view_path = "../deliverables/views/low_stock_products_view.sql"
 
         # Execute schema to ensure tables exist
         execute_sql_script(db_connection, schema_path)

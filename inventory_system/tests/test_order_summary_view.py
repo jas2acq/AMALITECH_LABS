@@ -9,8 +9,8 @@ def test_order_summary_view():
         return
 
     try:
-        schema_path = r"AMALITECH_LABS\inventory_system\deliverables\database_schema\schema.sql"
-        view_script_path = r"AMALITECH_LABS\inventory_system\deliverables\views\order_summary_view.sql"
+        schema_path = "../deliverables/database_schema/schema.sql"
+        view_script_path = "../deliverables/views/order_summary_view.sql"
 
         # Execute schema to ensure tables exist
         execute_sql_script(db_connection, schema_path)

@@ -17,7 +17,7 @@ def connect_db():
         return None
 
 def execute_sql_script(connection, script_path):
-    """Executes a SQL script from the given file path."""
+    """Executes a SQL script from the given file path, handling delimiters."""
     if not connection:
         print("No database connection available.")
         return
@@ -26,15 +26,37 @@ def execute_sql_script(connection, script_path):
     try:
         with open(script_path, 'r') as f:
             sql_content = f.read()
-            for statement in sql_content.split(';'):
-                statement = statement.strip()
-                if statement:
-                    cursor.execute(statement)
-                    if cursor.with_rows:  # Check if the statement returned rows
-                        cursor.fetchall()  # Fetch all results to clear the unread result
+
+        statements = []
+        current_statement = ""
+        delimiter = ";"
+
+        for line in sql_content.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if line.upper().startswith("DELIMITER"):
+                parts = line.split()
+                if len(parts) > 1:
+                    delimiter = parts[1]
+                continue
+            current_statement += line + "\n"
+            if current_statement.strip().endswith(delimiter):
+                statements.append(current_statement.strip()[:-len(delimiter)].strip())
+                current_statement = ""
+
+        if current_statement.strip():  # Handle any remaining statement without a delimiter
+            statements.append(current_statement.strip())
+
+        for statement in statements:
+            if statement:
+                cursor.execute(statement)
+                if cursor.with_rows:
+                    cursor.fetchall()
 
         connection.commit()
         print(f"Successfully executed SQL script: {script_path}")
+
     except FileNotFoundError:
         print(f"Error: SQL script not found at {script_path}")
         raise
