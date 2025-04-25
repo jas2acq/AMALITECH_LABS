@@ -258,3 +258,268 @@ def convert_column_to_datetime_spark(df, column_name='release_date'):
     else:
         print(f"Warning: Column '{column_name}' not found in the DataFrame.")
         return df
+    
+
+def process_director_column_spark(df, crew_column='credits.crew', director_column='director'):
+    """
+    Extracts and joins the names of directors from the 'crew' field within the 'credits'
+    column of a PySpark DataFrame, creating a new column named 'director'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the crew data.
+        crew_column (str, optional): The name of the column containing the crew data
+                                    (nested within 'credits'). Defaults to 'credits.crew'.
+        director_column (str, optional): The name of the new column to create for directors.
+                                         Defaults to 'director'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added 'director' column.
+    """
+    df = df.withColumn(
+        director_column,
+        concat_ws("|", transform(
+            crew_column,
+            lambda crew_member: when(
+                (crew_member.getItem("job") == "Director"),
+                crew_member.getItem("name")
+            ).otherwise(None)
+        ))
+    )
+    return df
+
+
+def process_cast_size_column_spark(df, cast_column='credits.cast', cast_size_column="cast_size"):
+    """
+    Extracts the size of the cast (number of unique cast member IDs)
+    from a list of dictionaries in a specified cast column of a PySpark DataFrame.
+    Handles potential null values or empty lists.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the cast data.
+        cast_column (str, optional): The name of the column containing the
+                                     list of cast dictionaries.
+                                     Defaults to 'credits.cast'.
+        cast_size_column (str, optional): The name of the new column to create
+                                          with the cast size.
+                                          Defaults to 'cast_size'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added cast size column.
+    """
+
+    # Define a UDF to extract unique cast IDs and get the size, handling nulls
+    extract_cast_size_udf = udf(lambda cast_list: len(set([c[2] for c in cast_list if isinstance(c, (list, tuple)) and len(c) > 2])) if cast_list else 0, IntegerType())
+
+    # Apply the UDF to the DataFrame
+    df = df.withColumn(cast_size_column, extract_cast_size_udf(col(cast_column)))
+    
+    return df
+
+
+def process_crew_size_column_spark(df, crew_column='credits.crew', crew_size_column='crew_size'):
+    """
+    Extracts the size of the crew (number of unique crew member IDs)
+    from a list of dictionaries in a specified crew column of a PySpark DataFrame.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the crew data.
+        crew_column (str, optional): The name of the column containing the
+                                     list of crew dictionaries.
+                                     Defaults to 'credits.crew'.
+        crew_size_column (str, optional): The name of the new column to create
+                                          with the crew size.
+                                          Defaults to 'crew_size'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added crew size column.
+    """
+
+    # Define a UDF to extract unique crew IDs and get the size
+    extract_crew_size_udf = udf(lambda crew_list: len(set([c[2] for c in crew_list if isinstance(c, (list, tuple)) and len(c) > 2])) if crew_list else 0, IntegerType())
+
+
+    # Apply the UDF to the DataFrame
+    df = df.withColumn(crew_size_column, extract_crew_size_udf(col(crew_column)))
+    
+    return df
+
+
+def convert_budget_to_musd_spark(df):
+    """
+    Converts the 'budget' column (in USD) to millions of USD (MUSD) 
+    and rounds to the nearest whole number, creating a new column 
+    'budget_musd'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame to modify.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added 'budget_musd' column.
+    """
+    original_column = 'budget'
+    new_column = 'budget_musd'
+
+    if original_column in df.columns:
+        df = df.withColumn(new_column, round(col(original_column) / 1000000))
+        return df
+    else:
+        print(f"Warning: Column '{original_column}' not found in the DataFrame.")
+        return df
+
+def convert_revenue_to_musd_spark(df):
+    """
+    Converts the 'revenue' column (in USD) to millions of USD (MUSD) 
+    and rounds to two decimal places, creating a new column 'revenue_musd'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame to modify.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added 'revenue_musd' column.
+    """
+    original_column = 'revenue'
+    new_column = 'revenue_musd'
+
+    if original_column in df.columns:
+        df = df.withColumn(new_column, round(col(original_column) / 1000000, 2))
+        return df
+    else:
+        print(f"Warning: Column '{original_column}' not found in the DataFrame.")
+        return df
+    
+
+def process_cast_column_spark(df, cast_column='credits.cast', output_cast_column='cast'):
+    """
+    Extracts and joins the original names of cast members from a list of dictionaries
+    in a specified cast column of a PySpark DataFrame, creating a new column
+    with the joined cast names.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the cast data.
+        cast_column (str, optional): The name of the column containing the
+                                     list of cast dictionaries.
+                                     Defaults to 'credits.cast'.
+        output_cast_column (str, optional): The name of the new column to create
+                                            with the joined cast names.
+                                            Defaults to 'cast'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the added cast column.
+    """
+    df = df.withColumn(
+        output_cast_column,
+        concat_ws("|", transform(
+            cast_column,
+            lambda castor: when(
+                castor.getItem("original_name").isNotNull(),
+                castor.getItem("original_name")
+            ).otherwise(None)
+        ))
+    )
+    return df
+
+
+def reorder_dataframe_columns_spark(df, column_order):
+    """
+    Reorders the columns of a PySpark DataFrame according to the specified order.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame to reorder.
+        column_order (list): A list of column names in the desired order.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the columns reordered.
+    """
+    existing_columns = df.columns
+    
+    # Check for invalid columns and print warnings
+    invalid_columns = [col for col in column_order if col not in existing_columns]
+    for col in invalid_columns:
+        print(f"Warning: Column '{col}' not found in the DataFrame and will be skipped.")
+        
+    # Select only valid columns in the desired order
+    valid_column_order = [col for col in column_order if col in existing_columns]
+    reordered_df = df.select(*valid_column_order)  
+    
+    return reordered_df
+
+
+def drop_unwanted_columns_spark(df, columns_to_drop=None):
+    """
+    Drops specified columns from a PySpark DataFrame.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame to modify.
+        columns_to_drop (list, optional): A list of column names to drop.
+                                          Defaults to None.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the specified columns dropped.
+    """
+    if columns_to_drop is None:
+        columns_to_drop = ['adult', 'imdb_id', 'original_title', 'video', 'homepage']
+
+    # Check if columns exist before dropping to avoid errors
+    existing_columns = df.columns
+    valid_columns_to_drop = [col for col in columns_to_drop if col in existing_columns]
+
+    # Drop the columns
+    df = df.drop(*valid_columns_to_drop)  
+    return df
+
+
+
+def create_cleaned_movie_dataframe_spark(raw_df):
+    """
+    Applies all cleaning operations to a raw movie DataFrame to create a cleaned DataFrame.
+
+    Args:
+        raw_df (pyspark.sql.DataFrame): The raw movie DataFrame.
+
+    Returns:
+        pyspark.sql.DataFrame: The cleaned movie DataFrame.
+    """
+    # 1. Process genres column
+    cleaned_df = process_genres_column_spark(raw_df)
+    
+    # 2. Process languages column
+    cleaned_df = process_languages_column_spark(cleaned_df)
+    
+    # 3. Process production companies column
+    cleaned_df = process_production_companies_column_spark(cleaned_df)
+    
+    # 4. Process production countries column
+    cleaned_df = process_production_countries_column_spark(cleaned_df)
+    
+    # 5. Convert release date to datetime
+    cleaned_df = convert_column_to_datetime_spark(cleaned_df)
+    
+    # 6. Process director column
+    cleaned_df = process_director_column_spark(cleaned_df)
+    
+    # 7. Process cast size column
+    cleaned_df = process_cast_size_column_spark(cleaned_df)
+    
+    # 8. Process crew size column
+    cleaned_df = process_crew_size_column_spark(cleaned_df)
+    
+    # 9. Convert budget to MUSD
+    cleaned_df = convert_budget_to_musd_spark(cleaned_df)
+    
+    # 10. Convert revenue to MUSD
+    cleaned_df = convert_revenue_to_musd_spark(cleaned_df)
+    
+    # 11. Process cast column
+    cleaned_df = process_cast_column_spark(cleaned_df)
+    
+    # 12. Reorder columns (optional, add your desired column order)
+    new_column_order =['id', 'title', 'tagline', 'release_date', 'genres', 'belongs_to_collection', 
+'original_language', 'budget_musd', 'revenue_musd', 'production_companies', 
+'production_countries', 'vote_count', 'vote_average', 'popularity', 'runtime', 
+'overview', 'spoken_languages', 'poster_path', 'cast', 'cast_size', 'director', 'crew_size', 'spoken_languages_pro','production_companies_pro','production_countries_pro','genres_pro'] # Replace with your desired order
+    cleaned_df = reorder_dataframe_columns_spark(cleaned_df, new_column_order)
+    
+    # 13. Drop unwanted columns
+    cleaned_df = drop_unwanted_columns_spark(cleaned_df)  
+    
+    return cleaned_df
