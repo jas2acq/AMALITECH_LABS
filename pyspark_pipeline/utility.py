@@ -4,8 +4,6 @@ import requests
 import time
 import logging
 from pyspark.sql.functions import *
-
-
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
