@@ -125,3 +125,136 @@ def create_raw_movies_spark_dataframe(movie_ids_list, api_key, schema=None):
         raw_movies_df = raw_data_rdd.map(lambda data: Row(**data)).toDF()
 
     return raw_movies_df
+
+
+def process_genres_column_spark(df, genre_column='genres'):
+    """
+    Extracts genre names from a list of dictionaries in a DataFrame column
+    and joins them into a pipe-separated string, creating a new column 
+    named 'genres_pro'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the genre data.
+        genre_column (str, optional): The name of the column containing the
+                                       list of genre dictionaries.
+                                       Defaults to 'genres'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the new 'genres_pro' column.
+    """
+
+    # Extract and join genre names, using PySpark SQL functions for conditionals
+    df = df.withColumn(
+        "genres_pro",
+        concat_ws("|", transform(
+            genre_column,
+            lambda genre: when(genre.isNotNull() & genre.getItem("name").isNotNull(), genre.getItem("name")).otherwise(None)
+        ))
+    )
+
+    return df
+
+def process_languages_column_spark(df, language_column='spoken_languages'):
+    """
+    Extracts English language names from a list of dictionaries in a DataFrame column
+    and joins them into a pipe-separated string, creating a new column
+    named 'spoken_languages_pro'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the language data.
+        language_column (str, optional): The name of the column containing the
+                                          list of language dictionaries.
+                                          Defaults to 'spoken_languages'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the new 'spoken_languages_pro' column.
+    """
+    # Extract and join English language names using PySpark SQL functions
+    df = df.withColumn(
+        "spoken_languages_pro",
+        concat_ws("|", transform(
+            language_column,
+            lambda lang: when(lang.getItem("english_name").isNotNull(), lang.getItem("english_name")).otherwise(None)
+        ))
+    )
+
+    return df
+
+
+def process_production_companies_column_spark(df, production_companies_column='production_companies'):
+    """
+    Extracts production company names from a list of dictionaries in a DataFrame column
+    and joins them into a pipe-separated string, creating a new column
+    named 'production_companies_pro'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the production company data.
+        production_companies_column (str, optional): The name of the column containing the
+                                                     list of production company dictionaries.
+                                                     Defaults to 'production_companies'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the new 'production_companies_pro' column.
+    """
+    # Extract and join production company names using PySpark SQL functions
+    df = df.withColumn(
+        "production_companies_pro",
+        concat_ws("|", transform(
+            production_companies_column,
+            lambda company: when(company.getItem("name").isNotNull(), company.getItem("name")).otherwise(None)
+        ))
+    )
+    
+    return df
+
+
+def process_production_countries_column_spark(df, production_countries_column='production_countries'):
+    """
+    Extracts production country names from a list of dictionaries in a DataFrame column
+    and joins them into a pipe-separated string, creating a new column
+    named 'production_countries_pro'.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing the production country data.
+        production_countries_column (str, optional): The name of the column containing the
+                                                       list of production country dictionaries.
+                                                       Defaults to 'production_countries'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the new 'production_countries_pro' column.
+    """
+    # Extract and join production country names using PySpark SQL functions
+    df = df.withColumn(
+        "production_countries_pro",
+        concat_ws("|", transform(
+            production_countries_column,
+            lambda country: when(country.getItem("name").isNotNull(), country.getItem("name")).otherwise(None)
+        ))
+    )
+
+    return df
+
+
+
+def convert_column_to_datetime_spark(df, column_name='release_date'):
+    """
+    Converts a specified column in a PySpark DataFrame to date type.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame to modify.
+        column_name (str, optional): The name of the column to convert.
+                                     Defaults to 'release_date'.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with the specified column 
+                               converted to date type.
+    """
+    # Check if the column exists
+    if column_name in df.columns:
+        # Convert the column to date type using to_date function
+        # Added the format string 'yyyy-MM-dd' to properly parse the dates
+        df = df.withColumn(column_name, to_date(column_name, 'yyyy-MM-dd'))  
+        return df
+    else:
+        print(f"Warning: Column '{column_name}' not found in the DataFrame.")
+        return df
