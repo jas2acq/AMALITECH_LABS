@@ -523,3 +523,237 @@ def create_cleaned_movie_dataframe_spark(raw_df):
     cleaned_df = drop_unwanted_columns_spark(cleaned_df)  
     
     return cleaned_df
+
+
+def get_top_10_by_revenue(df):
+    """Returns the top 10 movies ranked by revenue (in MUSD)."""
+    return df.orderBy(desc("revenue_musd")).limit(10)
+
+def get_top_10_by_budget(df):
+    """Returns the top 10 movies ranked by budget (in MUSD)."""
+    return df.orderBy(desc("budget_musd")).limit(10)
+
+def get_top_10_by_profit(df):
+    """Returns the top 10 movies ranked by profit (revenue - budget in MUSD)."""
+    return df.withColumn("profit", col("revenue_musd") - col("budget_musd")).orderBy(desc("profit")).limit(10)
+
+def get_bottom_10_by_profit(df):
+    """Returns the bottom 10 movies ranked by profit (revenue - budget in MUSD)."""
+    return df.withColumn("profit", col("revenue_musd") - col("budget_musd")).orderBy(asc("profit")).limit(10)
+
+def get_top_10_by_roi_high_budget(df):
+    """Returns the top 10 movies ranked by ROI (revenue / budget) for movies with budget > 10M."""
+    return df.filter(col("budget_musd") > 10).withColumn("ROI", when(col("budget_musd") != 0, col("revenue_musd") / col("budget_musd")).otherwise(0)).orderBy(desc("ROI")).limit(10)
+
+def get_bottom_10_by_roi_high_budget(df):
+    """Returns the bottom 10 movies ranked by ROI (revenue / budget) for movies with budget > 10M."""
+    return df.filter(col("budget_musd") > 10).withColumn("ROI", when(col("budget_musd") != 0, col("revenue_musd") / col("budget_musd")).otherwise(0)).orderBy(asc("ROI")).limit(10)
+
+def get_most_voted_movie(df):
+    """Returns the movie with the highest vote count."""
+    max_vote_count = df.select(max("vote_count")).collect()[0][0]  # Get the maximum vote count
+    return df.filter(col("vote_count") == max_vote_count).select("title", "vote_count")
+
+def get_top_10_most_voted_high_vote_count(df):
+    """Returns the top 10 movies with the highest vote count (for movies with vote count > 10)."""
+    return df.filter(col("vote_count") > 10).orderBy(desc("vote_count")).select("title", "vote_count").limit(10)
+
+def get_top_10_least_voted_high_vote_count(df):
+    """Returns the top 10 movies with the lowest vote count (for movies with vote count > 10)."""
+    return df.filter(col("vote_count") > 10).orderBy(asc("vote_count")).select("title", "vote_count").limit(10)
+
+def get_most_popular_movie(df):
+    """Returns the movie with the highest popularity."""
+    max_popularity = df.select(max("popularity")).collect()[0][0]  # Get the maximum popularity
+    return df.filter(col("popularity") == max_popularity).select("title", "popularity")
+
+def find_uma_thurman_tarantino_movies(df):
+    """
+    Finds movies where Uma Thurman is in the cast and Quentin Tarantino is the director.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing movie data.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the title, director, and runtime of
+                              the matching movies, sorted by runtime.
+    """
+    # Filter using contains and asc to sort
+    search_results = df.filter(
+        (col("cast").contains("Uma Thurman")) & (col("director").contains("Quentin Tarantino"))
+    ).orderBy(col("runtime").asc())
+
+    return search_results.select("title", "director", "runtime")
+
+def find_sci_fi_action_bruce_willis_movies(df):
+    """
+    Finds Science Fiction and Action movies starring Bruce Willis.
+
+    Args:
+        df (pyspark.sql.DataFrame): The DataFrame containing movie data with 'genres', 'cast', and 'vote_average' columns.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the title and vote average of the top 5 matching movies,
+                      sorted by vote average in descending order.
+    """
+    
+    search_results = df.filter(
+        (col("genres_pro").contains("Science Fiction")) & 
+        (col("genres_pro").contains("Action")) & 
+        (col("cast").contains("Bruce Willis"))
+    ).orderBy(desc("vote_average")).limit(5)
+    
+    return search_results.select("title", "vote_average")
+
+
+def compare_franchise_standalone(df, belongs_to_collection_col='belongs_to_collection', revenue_col='revenue_musd', budget_col='budget_musd', popularity_col='popularity', rating_col='vote_average'):
+    """
+    Compares movie franchises vs. standalone movies in terms of various metrics.
+
+    Args:
+        df (pyspark.sql.DataFrame): The input DataFrame.
+        belongs_to_collection_col (str, optional): The name of the column indicating franchise. Defaults to 'belongs_to_collection'.
+        revenue_col (str, optional): The name of the revenue column. Defaults to 'revenue_musd'.
+        budget_col (str, optional): The name of the budget column. Defaults to 'budget_musd'.
+        popularity_col (str, optional): The name of the popularity column. Defaults to 'popularity'.
+        rating_col (str, optional): The name of the rating column. Defaults to 'vote_average'.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the comparison results.
+    """
+    # Create a new column 'is_franchise'
+    df = df.withColumn("is_franchise", when(col(belongs_to_collection_col).isNotNull(), 1).otherwise(0))
+
+    # Calculate ROI
+    df = df.withColumn("ROI", when(col(budget_col) != 0, col(revenue_col) / col(budget_col)).otherwise(0))
+
+    # Group by 'is_franchise' and calculate metrics
+    comparison_df = df.groupBy("is_franchise").agg(
+        avg(revenue_col).alias("mean_revenue"),
+        median("ROI").alias("median_ROI"),
+        avg(budget_col).alias("mean_budget"),
+        avg(popularity_col).alias("mean_popularity"),
+        avg(rating_col).alias("mean_rating")
+    )
+
+    # Rename 'is_franchise' values for better readability
+    comparison_df = comparison_df.withColumn(
+        "movie_type",
+        when(col("is_franchise") == 1, "Franchise").otherwise("Standalone")
+    ).drop("is_franchise")
+
+    return comparison_df
+
+def most_successful_franchises(df, belongs_to_collection_col='belongs_to_collection', revenue_col='revenue_musd', budget_col='budget_musd', rating_col='vote_average'):
+    """
+    Finds the most successful movie franchises based on various metrics.
+
+    Args:
+        df (pyspark.sql.DataFrame): The input DataFrame.
+        belongs_to_collection_col (str, optional): The name of the column indicating franchise. Defaults to 'belongs_to_collection'.
+        revenue_col (str, optional): The name of the revenue column. Defaults to 'revenue_musd'.
+        budget_col (str, optional): The name of the budget column. Defaults to 'budget_musd'.
+        rating_col (str, optional): The name of the rating column. Defaults to 'vote_average'.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the most successful franchises.
+    """
+
+    franchise_df = df.filter(col(belongs_to_collection_col).isNotNull()) \
+        .groupBy(belongs_to_collection_col + ".name") \
+        .agg(
+            count("*").alias("num_movies"),
+            sum(budget_col).alias("total_budget"),
+            avg(budget_col).alias("mean_budget"),
+            sum(revenue_col).alias("total_revenue"),
+            avg(revenue_col).alias("mean_revenue"),
+            avg(rating_col).alias("mean_rating")
+        ) \
+        .orderBy(desc("num_movies"), desc("total_revenue"))
+
+    return franchise_df
+
+
+def most_successful_directors(df, director_col='director', revenue_col='revenue_musd', rating_col='vote_average'):
+    """
+    Finds the most successful directors based on various metrics.
+
+    Args:
+        df (pyspark.sql.DataFrame): The input DataFrame.
+        director_col (str, optional): The name of the director column. Defaults to 'director'.
+        revenue_col (str, optional): The name of the revenue column. Defaults to 'revenue_musd'.
+        rating_col (str, optional): The name of the rating column. Defaults to 'vote_average'.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the most successful directors.
+    """
+    # Explode the director column, then group by director and aggregate
+    director_df = df.filter(col(director_col).isNotNull()) \
+                    .withColumn("director", explode(split(col(director_col), "\\|"))) \
+                    .groupBy("director") \
+                    .agg(
+                        count("*").alias("num_movies"),
+                        sum(revenue_col).alias("total_revenue"),
+                        avg(rating_col).alias("mean_rating")
+                    ) \
+                    .orderBy(desc("num_movies"), desc("total_revenue"))
+
+    return director_df
+
+
+def apply_kpi_calculations(df):
+    """
+    Applies all KPI calculations, adds resulting columns to the DataFrame, and displays results.
+
+    Args:
+        df (pyspark.sql.DataFrame): The input DataFrame.
+
+    Returns:
+        pyspark.sql.DataFrame: The DataFrame with added KPI columns.
+    """
+
+    # 1. Profit and ROI
+    df = df.withColumn("profit", col("revenue_musd") - col("budget_musd"))
+    df = df.withColumn("ROI", when(col("budget_musd") != 0, col("revenue_musd") / col("budget_musd")).otherwise(0))
+
+    # 2. Top/Bottom by Revenue, Budget, Profit, ROI 
+    print("---- Top 10 by Revenue ----")
+    get_top_10_by_revenue(df).show()
+    print("---- Top 10 by Budget ----")
+    get_top_10_by_budget(df).show()
+    print("---- Top 10 by Profit ----")
+    get_top_10_by_profit(df).show()
+    print("---- Bottom 10 by Profit ----")
+    get_bottom_10_by_profit(df).show()
+    print("---- Top 10 by ROI (High Budget) ----")
+    get_top_10_by_roi_high_budget(df).show()
+    print("---- Bottom 10 by ROI (High Budget) ----")
+    get_bottom_10_by_roi_high_budget(df).show()
+
+    # 3. Most/Least Voted, Most Popular
+    print("---- Most Voted Movie ----")
+    get_most_voted_movie(df).show()
+    print("---- Top 10 Most Voted (High Vote Count) ----")
+    get_top_10_most_voted_high_vote_count(df).show()
+    print("---- Top 10 Least Voted (High Vote Count) ----")
+    get_top_10_least_voted_high_vote_count(df).show()
+    print("---- Most Popular Movie ----")
+    get_most_popular_movie(df).show()
+
+    # 4. Specific Movie Searches
+    print("---- Uma Thurman & Quentin Tarantino Movies ----")
+    find_uma_thurman_tarantino_movies(df).show()
+    print("---- Sci-Fi & Action Movies with Bruce Willis ----")
+    find_sci_fi_action_bruce_willis_movies(df).show()
+
+    # 5. Franchise vs. Standalone
+    print("---- Franchise vs. Standalone Comparison ----")
+    compare_franchise_standalone(df).show()
+
+    # 6. Most Successful Franchises and Directors
+    print("---- Most Successful Franchises ----")
+    most_successful_franchises(df).show()
+    print("---- Most Successful Directors ----")
+    most_successful_directors(df).show()
+
+    return df  # Return the updated DataFrame
