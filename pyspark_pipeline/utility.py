@@ -4,6 +4,13 @@ import requests
 import time
 import logging
 from pyspark.sql.functions import *
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+
+
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -757,3 +764,121 @@ def apply_kpi_calculations(df):
     most_successful_directors(df).show()
 
     return df  # Return the updated DataFrame
+
+
+def visualize_revenue_vs_budget(pandas_df):
+    """Visualizes Revenue vs. Budget Trends."""
+    print("\n--- Revenue vs. Budget Trends ---")
+    plt.figure(figsize=(8, 6))
+    plt.scatter(pandas_df['budget_musd'], pandas_df['revenue_musd'], alpha=0.5)
+    plt.title('Revenue vs. Budget')
+    plt.xlabel('Budget (MUSD)')
+    plt.ylabel('Revenue (MUSD)')
+    plt.grid(True)
+    plt.show()
+
+def visualize_roi_by_genre(pandas_df):
+    """Visualizes ROI Distribution by Genre using KDE plots."""
+    print("\n--- ROI Distribution by Genre ---")
+    
+    # Use Seaborn for KDE plots
+    plt.figure(figsize=(12, 6))  # Adjust figure size as needed
+    sns.kdeplot(data=pandas_df, x='ROI', hue='genres_pro', common_norm=False) 
+    
+    plt.title('ROI Distribution by Genre')
+    plt.xlabel('ROI')
+    plt.ylabel('Density')
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    plt.tight_layout()
+    plt.show()
+
+def visualize_popularity_vs_rating(pandas_df):
+    """Visualizes Popularity vs. Rating."""
+    print("\n--- Popularity vs. Rating ---")
+    plt.figure(figsize=(8, 6))
+    plt.scatter(pandas_df['popularity'], pandas_df['vote_average'], alpha=0.5)
+    plt.title('Popularity vs. Rating')
+    plt.xlabel('Popularity')
+    plt.ylabel('Rating')
+    plt.grid(True)
+    plt.show()
+
+def visualize_yearly_box_office_performance(pandas_df):
+    """Visualizes Yearly Trends in Box Office Performance."""
+    print("\n--- Yearly Trends in Box Office Performance ---")
+    yearly_revenue = pandas_df.groupby(pandas_df['release_date'].dt.year)['revenue_musd'].sum()
+    plt.figure(figsize=(10, 6))
+    yearly_revenue.plot(kind='line')
+    plt.title('Yearly Trends in Box Office Performance')
+    plt.xlabel('Year')
+    plt.ylabel('Total Revenue (MUSD)')
+    plt.grid(True)
+    plt.show()
+
+def visualize_franchise_vs_standalone(comparison_results_pd):
+    """Visualizes Comparison of Franchise vs. Standalone Success."""
+    print("\n--- Franchise vs. Standalone Success ---")
+    comparison_results_pd.set_index('movie_type', inplace=True)
+    comparison_results_pd[['mean_revenue', 'mean_budget']].plot(kind='bar', figsize=(8, 6))
+    plt.title('Franchise vs. Standalone: Revenue and Budget')
+    plt.ylabel('MUSD')
+    plt.xticks(rotation=0)
+    plt.grid(True)
+    plt.show()
+    
+def compare_franchise_standalone(df, belongs_to_collection_col='belongs_to_collection', revenue_col='revenue_musd', budget_col='budget_musd', popularity_col='popularity', rating_col='vote_average'):
+    """
+    Compares movie franchises vs. standalone movies in terms of various metrics.
+
+    Args:
+        df (pyspark.sql.DataFrame): The input DataFrame.
+        belongs_to_collection_col (str, optional): The name of the column indicating franchise. Defaults to 'belongs_to_collection'.
+        revenue_col (str, optional): The name of the revenue column. Defaults to 'revenue_musd'.
+        budget_col (str, optional): The name of the budget column. Defaults to 'budget_musd'.
+        popularity_col (str, optional): The name of the popularity column. Defaults to 'popularity'.
+        rating_col (str, optional): The name of the rating column. Defaults to 'vote_average'.
+
+    Returns:
+        pyspark.sql.DataFrame: A DataFrame containing the comparison results.
+    """
+    # Create a new column 'is_franchise'
+    df = df.withColumn("is_franchise", when(col(belongs_to_collection_col).isNotNull(), 1).otherwise(0))
+
+    # Calculate ROI
+    df = df.withColumn("ROI", when(col(budget_col) != 0, col(revenue_col) / col(budget_col)).otherwise(0))
+
+    # Group by 'is_franchise' and calculate metrics
+    comparison_df = df.groupBy("is_franchise").agg(
+        avg(revenue_col).alias("mean_revenue"),
+        median("ROI").alias("median_ROI"),
+        avg(budget_col).alias("mean_budget"),
+        avg(popularity_col).alias("mean_popularity"),
+        avg(rating_col).alias("mean_rating")
+    )
+
+    # Rename 'is_franchise' values for better readability
+    comparison_df = comparison_df.withColumn(
+        "movie_type",
+        when(col("is_franchise") == 1, "Franchise").otherwise("Standalone")
+    ).drop("is_franchise")
+
+    return comparison_df
+
+def visualize_data(spark_df):
+    """
+    Orchestrates the visualization process using modular functions.
+
+    Args:
+        spark_df (pyspark.sql.DataFrame): The input PySpark DataFrame.
+    """
+    pandas_df = spark_df.toPandas()
+
+    # Calculate comparison_results here:
+    comparison_results = compare_franchise_standalone(spark_df)
+    comparison_results_pd = comparison_results.toPandas()
+
+    visualize_revenue_vs_budget(pandas_df)
+    visualize_roi_by_genre(pandas_df)
+    visualize_popularity_vs_rating(pandas_df)
+    #visualize_yearly_box_office_performance(pandas_df)
+    visualize_franchise_vs_standalone(comparison_results_pd)
