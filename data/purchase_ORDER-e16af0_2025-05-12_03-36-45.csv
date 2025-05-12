@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-07e22c,George,Bond,40,ORDER-e16af0,2025-05-12_03-36-45,13,1710.0,P104,Men's Sneakers,5,120.0,600.0
+CUST-07e22c,George,Bond,40,ORDER-e16af0,2025-05-12_03-36-45,13,1710.0,P108,Office Chair,4,200.0,800.0
+CUST-07e22c,George,Bond,40,ORDER-e16af0,2025-05-12_03-36-45,13,1710.0,P109,Wireless Earbuds,1,85.0,85.0
+CUST-07e22c,George,Bond,40,ORDER-e16af0,2025-05-12_03-36-45,13,1710.0,P105,Women's Handbag,3,75.0,225.0

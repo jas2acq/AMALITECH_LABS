@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-621106,Michael,Sizemore,20,ORDER-f950c6,2025-05-12_03-37-21,14,2185.0,P104,Men's Sneakers,5,120.0,600.0
+CUST-621106,Michael,Sizemore,20,ORDER-f950c6,2025-05-12_03-37-21,14,2185.0,P110,Fitness Tracker,3,150.0,450.0
+CUST-621106,Michael,Sizemore,20,ORDER-f950c6,2025-05-12_03-37-21,14,2185.0,P110,Fitness Tracker,4,150.0,600.0
+CUST-621106,Michael,Sizemore,20,ORDER-f950c6,2025-05-12_03-37-21,14,2185.0,P103,Digital Camera,1,450.0,450.0
+CUST-621106,Michael,Sizemore,20,ORDER-f950c6,2025-05-12_03-37-21,14,2185.0,P109,Wireless Earbuds,1,85.0,85.0

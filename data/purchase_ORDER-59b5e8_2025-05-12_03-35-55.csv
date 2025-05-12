@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-232793,Betty,Castlen,19,ORDER-59b5e8,2025-05-12_03-35-55,1,75.0,P105,Women's Handbag,1,75.0,75.0

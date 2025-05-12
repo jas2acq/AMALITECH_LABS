@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-88fb51,Joseph,Roe,35,ORDER-9cd934,2025-05-12_03-26-25,17,2420.0,P109,Wireless Earbuds,4,85.0,340.0
+CUST-88fb51,Joseph,Roe,35,ORDER-9cd934,2025-05-12_03-26-25,17,2420.0,P110,Fitness Tracker,3,150.0,450.0
+CUST-88fb51,Joseph,Roe,35,ORDER-9cd934,2025-05-12_03-26-25,17,2420.0,P108,Office Chair,5,200.0,1000.0
+CUST-88fb51,Joseph,Roe,35,ORDER-9cd934,2025-05-12_03-26-25,17,2420.0,P107,Bluetooth Speaker,2,90.0,180.0
+CUST-88fb51,Joseph,Roe,35,ORDER-9cd934,2025-05-12_03-26-25,17,2420.0,P110,Fitness Tracker,3,150.0,450.0

@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-48b94c,Lauren,Almendarez,39,ORDER-d0cafd,2025-05-12_03-26-40,5,825.0,P104,Men's Sneakers,1,120.0,120.0
+CUST-48b94c,Lauren,Almendarez,39,ORDER-d0cafd,2025-05-12_03-26-40,5,825.0,P103,Digital Camera,1,450.0,450.0
+CUST-48b94c,Lauren,Almendarez,39,ORDER-d0cafd,2025-05-12_03-26-40,5,825.0,P109,Wireless Earbuds,3,85.0,255.0

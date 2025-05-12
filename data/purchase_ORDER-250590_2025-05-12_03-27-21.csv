@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-1a3426,Robert,Hurley,30,ORDER-250590,2025-05-12_03-27-21,5,600.0,P104,Men's Sneakers,5,120.0,600.0

@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-915f20,Erna,Ratliff,35,ORDER-e6c1e6,2025-05-12_03-25-27,10,4195.0,P102,Laptop,3,1200.0,3600.0
+CUST-915f20,Erna,Ratliff,35,ORDER-e6c1e6,2025-05-12_03-25-27,10,4195.0,P109,Wireless Earbuds,3,85.0,255.0
+CUST-915f20,Erna,Ratliff,35,ORDER-e6c1e6,2025-05-12_03-25-27,10,4195.0,P109,Wireless Earbuds,4,85.0,340.0

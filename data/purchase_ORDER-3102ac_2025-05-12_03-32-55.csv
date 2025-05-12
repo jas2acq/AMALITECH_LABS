@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-c80f31,Christina,Kolodziej,30,ORDER-3102ac,2025-05-12_03-32-55,11,7449.95,P101,Smartphone,5,799.99,3999.95
+CUST-c80f31,Christina,Kolodziej,30,ORDER-3102ac,2025-05-12_03-32-55,11,7449.95,P102,Laptop,1,1200.0,1200.0
+CUST-c80f31,Christina,Kolodziej,30,ORDER-3102ac,2025-05-12_03-32-55,11,7449.95,P103,Digital Camera,5,450.0,2250.0

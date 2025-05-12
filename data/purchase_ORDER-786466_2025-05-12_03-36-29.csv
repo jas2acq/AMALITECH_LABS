@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-f096ff,Darin,Gohn,38,ORDER-786466,2025-05-12_03-36-29,19,10744.95,P102,Laptop,4,1200.0,4800.0
+CUST-f096ff,Darin,Gohn,38,ORDER-786466,2025-05-12_03-36-29,19,10744.95,P109,Wireless Earbuds,5,85.0,425.0
+CUST-f096ff,Darin,Gohn,38,ORDER-786466,2025-05-12_03-36-29,19,10744.95,P103,Digital Camera,3,450.0,1350.0
+CUST-f096ff,Darin,Gohn,38,ORDER-786466,2025-05-12_03-36-29,19,10744.95,P109,Wireless Earbuds,2,85.0,170.0
+CUST-f096ff,Darin,Gohn,38,ORDER-786466,2025-05-12_03-36-29,19,10744.95,P101,Smartphone,5,799.99,3999.95

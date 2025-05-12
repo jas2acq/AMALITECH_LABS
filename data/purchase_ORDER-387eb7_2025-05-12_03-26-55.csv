@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-6502b8,Katherine,Johnson,20,ORDER-387eb7,2025-05-12_03-26-55,6,1450.0,P103,Digital Camera,2,450.0,900.0
+CUST-6502b8,Katherine,Johnson,20,ORDER-387eb7,2025-05-12_03-26-55,6,1450.0,P105,Women's Handbag,2,75.0,150.0
+CUST-6502b8,Katherine,Johnson,20,ORDER-387eb7,2025-05-12_03-26-55,6,1450.0,P108,Office Chair,2,200.0,400.0

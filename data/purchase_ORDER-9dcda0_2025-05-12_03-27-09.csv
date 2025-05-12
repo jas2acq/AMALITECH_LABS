@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-28d15f,Gregorio,Shiever,19,ORDER-9dcda0,2025-05-12_03-27-09,16,7600.0,P104,Men's Sneakers,4,120.0,480.0
+CUST-28d15f,Gregorio,Shiever,19,ORDER-9dcda0,2025-05-12_03-27-09,16,7600.0,P110,Fitness Tracker,4,150.0,600.0
+CUST-28d15f,Gregorio,Shiever,19,ORDER-9dcda0,2025-05-12_03-27-09,16,7600.0,P108,Office Chair,2,200.0,400.0
+CUST-28d15f,Gregorio,Shiever,19,ORDER-9dcda0,2025-05-12_03-27-09,16,7600.0,P104,Men's Sneakers,1,120.0,120.0
+CUST-28d15f,Gregorio,Shiever,19,ORDER-9dcda0,2025-05-12_03-27-09,16,7600.0,P102,Laptop,5,1200.0,6000.0

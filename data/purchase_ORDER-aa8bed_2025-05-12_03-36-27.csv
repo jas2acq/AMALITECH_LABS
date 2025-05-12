@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-39dcd6,Samuel,Schwart,22,ORDER-aa8bed,2025-05-12_03-36-27,21,6749.96,P107,Bluetooth Speaker,4,90.0,360.0
+CUST-39dcd6,Samuel,Schwart,22,ORDER-aa8bed,2025-05-12_03-36-27,21,6749.96,P103,Digital Camera,5,450.0,2250.0
+CUST-39dcd6,Samuel,Schwart,22,ORDER-aa8bed,2025-05-12_03-36-27,21,6749.96,P109,Wireless Earbuds,4,85.0,340.0
+CUST-39dcd6,Samuel,Schwart,22,ORDER-aa8bed,2025-05-12_03-36-27,21,6749.96,P101,Smartphone,4,799.99,3199.96
+CUST-39dcd6,Samuel,Schwart,22,ORDER-aa8bed,2025-05-12_03-36-27,21,6749.96,P110,Fitness Tracker,4,150.0,600.0

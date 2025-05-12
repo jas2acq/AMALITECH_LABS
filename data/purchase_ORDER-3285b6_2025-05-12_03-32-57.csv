@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-1a0406,Joshua,Cooper,38,ORDER-3285b6,2025-05-12_03-32-57,4,1800.0,P103,Digital Camera,4,450.0,1800.0

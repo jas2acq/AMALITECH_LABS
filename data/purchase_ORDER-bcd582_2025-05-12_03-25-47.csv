@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-53b646,Courtney,Thole,35,ORDER-bcd582,2025-05-12_03-25-47,9,1650.0,P110,Fitness Tracker,3,150.0,450.0
+CUST-53b646,Courtney,Thole,35,ORDER-bcd582,2025-05-12_03-25-47,9,1650.0,P105,Women's Handbag,4,75.0,300.0
+CUST-53b646,Courtney,Thole,35,ORDER-bcd582,2025-05-12_03-25-47,9,1650.0,P103,Digital Camera,2,450.0,900.0

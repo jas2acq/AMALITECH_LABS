@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-b56b2b,Dora,Batarse,34,ORDER-687a1e,2025-05-12_03-37-02,13,4450.0,P106,Gaming Console,4,350.0,1400.0
+CUST-b56b2b,Dora,Batarse,34,ORDER-687a1e,2025-05-12_03-37-02,13,4450.0,P103,Digital Camera,5,450.0,2250.0
+CUST-b56b2b,Dora,Batarse,34,ORDER-687a1e,2025-05-12_03-37-02,13,4450.0,P108,Office Chair,4,200.0,800.0

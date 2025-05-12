@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-a72362,Maria,Carter,40,ORDER-90b347,2025-05-12_03-27-16,16,2250.0,P107,Bluetooth Speaker,3,90.0,270.0
+CUST-a72362,Maria,Carter,40,ORDER-90b347,2025-05-12_03-27-16,16,2250.0,P108,Office Chair,3,200.0,600.0
+CUST-a72362,Maria,Carter,40,ORDER-90b347,2025-05-12_03-27-16,16,2250.0,P110,Fitness Tracker,4,150.0,600.0
+CUST-a72362,Maria,Carter,40,ORDER-90b347,2025-05-12_03-27-16,16,2250.0,P110,Fitness Tracker,2,150.0,300.0
+CUST-a72362,Maria,Carter,40,ORDER-90b347,2025-05-12_03-27-16,16,2250.0,P104,Men's Sneakers,4,120.0,480.0

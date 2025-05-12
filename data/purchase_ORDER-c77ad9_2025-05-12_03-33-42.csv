@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-876b26,Jay,Ward,20,ORDER-c77ad9,2025-05-12_03-33-42,2,2400.0,P102,Laptop,2,1200.0,2400.0

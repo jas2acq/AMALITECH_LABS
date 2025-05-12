@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-7bcaf3,Eva,Shelley,23,ORDER-798bb5,2025-05-12_03-32-07,10,1155.0,P105,Women's Handbag,3,75.0,225.0
+CUST-7bcaf3,Eva,Shelley,23,ORDER-798bb5,2025-05-12_03-32-07,10,1155.0,P110,Fitness Tracker,5,150.0,750.0
+CUST-7bcaf3,Eva,Shelley,23,ORDER-798bb5,2025-05-12_03-32-07,10,1155.0,P107,Bluetooth Speaker,2,90.0,180.0

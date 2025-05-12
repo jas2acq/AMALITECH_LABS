@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-3b6a77,Nancy,Gibson,32,ORDER-aae84a,2025-05-12_03-25-25,7,3454.96,P101,Smartphone,4,799.99,3199.96
+CUST-3b6a77,Nancy,Gibson,32,ORDER-aae84a,2025-05-12_03-25-25,7,3454.96,P107,Bluetooth Speaker,2,90.0,180.0
+CUST-3b6a77,Nancy,Gibson,32,ORDER-aae84a,2025-05-12_03-25-25,7,3454.96,P105,Women's Handbag,1,75.0,75.0

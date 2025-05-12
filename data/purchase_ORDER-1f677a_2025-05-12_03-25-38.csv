@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-17d1c3,Herman,Glaspie,26,ORDER-1f677a,2025-05-12_03-25-38,12,1130.0,P107,Bluetooth Speaker,2,90.0,180.0
+CUST-17d1c3,Herman,Glaspie,26,ORDER-1f677a,2025-05-12_03-25-38,12,1130.0,P104,Men's Sneakers,4,120.0,480.0
+CUST-17d1c3,Herman,Glaspie,26,ORDER-1f677a,2025-05-12_03-25-38,12,1130.0,P109,Wireless Earbuds,2,85.0,170.0
+CUST-17d1c3,Herman,Glaspie,26,ORDER-1f677a,2025-05-12_03-25-38,12,1130.0,P105,Women's Handbag,4,75.0,300.0

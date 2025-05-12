@@ -1,0 +1,3 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-12d623,Teresa,Mcglade,40,ORDER-f1c113,2025-05-12_03-27-03,10,1125.0,P110,Fitness Tracker,5,150.0,750.0
+CUST-12d623,Teresa,Mcglade,40,ORDER-f1c113,2025-05-12_03-27-03,10,1125.0,P105,Women's Handbag,5,75.0,375.0

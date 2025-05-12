@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-c06a53,Andrew,Kruger,39,ORDER-8ee99c,2025-05-12_03-36-15,13,2940.0,P103,Digital Camera,5,450.0,2250.0
+CUST-c06a53,Andrew,Kruger,39,ORDER-8ee99c,2025-05-12_03-36-15,13,2940.0,P107,Bluetooth Speaker,2,90.0,180.0
+CUST-c06a53,Andrew,Kruger,39,ORDER-8ee99c,2025-05-12_03-36-15,13,2940.0,P107,Bluetooth Speaker,4,90.0,360.0
+CUST-c06a53,Andrew,Kruger,39,ORDER-8ee99c,2025-05-12_03-36-15,13,2940.0,P105,Women's Handbag,2,75.0,150.0

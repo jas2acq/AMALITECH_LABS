@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-360c9f,Marcus,Strickland,25,ORDER-f9f728,2025-05-12_03-33-25,12,8359.96,P102,Laptop,4,1200.0,4800.0
+CUST-360c9f,Marcus,Strickland,25,ORDER-f9f728,2025-05-12_03-33-25,12,8359.96,P107,Bluetooth Speaker,4,90.0,360.0
+CUST-360c9f,Marcus,Strickland,25,ORDER-f9f728,2025-05-12_03-33-25,12,8359.96,P101,Smartphone,4,799.99,3199.96

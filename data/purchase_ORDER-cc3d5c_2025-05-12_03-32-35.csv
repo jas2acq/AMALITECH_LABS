@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-baf44c,Enrique,Klein,18,ORDER-cc3d5c,2025-05-12_03-32-35,9,1995.0,P106,Gaming Console,1,350.0,350.0
+CUST-baf44c,Enrique,Klein,18,ORDER-cc3d5c,2025-05-12_03-32-35,9,1995.0,P108,Office Chair,5,200.0,1000.0
+CUST-baf44c,Enrique,Klein,18,ORDER-cc3d5c,2025-05-12_03-32-35,9,1995.0,P105,Women's Handbag,1,75.0,75.0
+CUST-baf44c,Enrique,Klein,18,ORDER-cc3d5c,2025-05-12_03-32-35,9,1995.0,P103,Digital Camera,1,450.0,450.0
+CUST-baf44c,Enrique,Klein,18,ORDER-cc3d5c,2025-05-12_03-32-35,9,1995.0,P104,Men's Sneakers,1,120.0,120.0

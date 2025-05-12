@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-df84ff,Margie,Payton,26,ORDER-ac6b17,2025-05-12_03-26-45,2,180.0,P107,Bluetooth Speaker,2,90.0,180.0

@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-e73dac,John,Fiske,26,ORDER-e7c322,2025-05-12_03-26-05,15,7039.97,P101,Smartphone,3,799.99,2399.97
+CUST-e73dac,John,Fiske,26,ORDER-e7c322,2025-05-12_03-26-05,15,7039.97,P106,Gaming Console,1,350.0,350.0
+CUST-e73dac,John,Fiske,26,ORDER-e7c322,2025-05-12_03-26-05,15,7039.97,P103,Digital Camera,5,450.0,2250.0
+CUST-e73dac,John,Fiske,26,ORDER-e7c322,2025-05-12_03-26-05,15,7039.97,P103,Digital Camera,4,450.0,1800.0
+CUST-e73dac,John,Fiske,26,ORDER-e7c322,2025-05-12_03-26-05,15,7039.97,P104,Men's Sneakers,2,120.0,240.0

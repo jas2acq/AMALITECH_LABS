@@ -1,0 +1,3 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-4cea13,James,Miller,18,ORDER-e6270f,2025-05-12_03-25-57,4,705.0,P109,Wireless Earbuds,3,85.0,255.0
+CUST-4cea13,James,Miller,18,ORDER-e6270f,2025-05-12_03-25-57,4,705.0,P103,Digital Camera,1,450.0,450.0

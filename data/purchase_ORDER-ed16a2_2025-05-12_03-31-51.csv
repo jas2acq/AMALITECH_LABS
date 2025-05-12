@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-5b0bb2,Douglas,Pringle,31,ORDER-ed16a2,2025-05-12_03-31-51,11,5460.0,P105,Women's Handbag,4,75.0,300.0
+CUST-5b0bb2,Douglas,Pringle,31,ORDER-ed16a2,2025-05-12_03-31-51,11,5460.0,P104,Men's Sneakers,3,120.0,360.0
+CUST-5b0bb2,Douglas,Pringle,31,ORDER-ed16a2,2025-05-12_03-31-51,11,5460.0,P102,Laptop,4,1200.0,4800.0

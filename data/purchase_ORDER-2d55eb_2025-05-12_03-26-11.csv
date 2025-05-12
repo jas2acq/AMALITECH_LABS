@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-159a7e,Mary,Chisam,20,ORDER-2d55eb,2025-05-12_03-26-11,5,375.0,P105,Women's Handbag,5,75.0,375.0

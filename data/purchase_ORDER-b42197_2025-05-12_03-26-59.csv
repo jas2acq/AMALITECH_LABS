@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-f37559,Alice,Streit,33,ORDER-b42197,2025-05-12_03-26-59,22,9500.0,P108,Office Chair,5,200.0,1000.0
+CUST-f37559,Alice,Streit,33,ORDER-b42197,2025-05-12_03-26-59,22,9500.0,P106,Gaming Console,5,350.0,1750.0
+CUST-f37559,Alice,Streit,33,ORDER-b42197,2025-05-12_03-26-59,22,9500.0,P102,Laptop,5,1200.0,6000.0
+CUST-f37559,Alice,Streit,33,ORDER-b42197,2025-05-12_03-26-59,22,9500.0,P105,Women's Handbag,2,75.0,150.0
+CUST-f37559,Alice,Streit,33,ORDER-b42197,2025-05-12_03-26-59,22,9500.0,P104,Men's Sneakers,5,120.0,600.0

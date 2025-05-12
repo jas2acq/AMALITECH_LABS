@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-c77377,Michael,Bolin,27,ORDER-dd5e00,2025-05-12_03-25-55,20,10929.96,P109,Wireless Earbuds,5,85.0,425.0
+CUST-c77377,Michael,Bolin,27,ORDER-dd5e00,2025-05-12_03-25-55,20,10929.96,P109,Wireless Earbuds,3,85.0,255.0
+CUST-c77377,Michael,Bolin,27,ORDER-dd5e00,2025-05-12_03-25-55,20,10929.96,P101,Smartphone,4,799.99,3199.96
+CUST-c77377,Michael,Bolin,27,ORDER-dd5e00,2025-05-12_03-25-55,20,10929.96,P106,Gaming Console,3,350.0,1050.0
+CUST-c77377,Michael,Bolin,27,ORDER-dd5e00,2025-05-12_03-25-55,20,10929.96,P102,Laptop,5,1200.0,6000.0

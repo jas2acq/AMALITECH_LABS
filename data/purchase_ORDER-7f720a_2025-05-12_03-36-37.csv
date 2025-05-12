@@ -1,0 +1,3 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-48a5ff,Emma,Garcia,36,ORDER-7f720a,2025-05-12_03-36-37,6,5500.0,P106,Gaming Console,2,350.0,700.0
+CUST-48a5ff,Emma,Garcia,36,ORDER-7f720a,2025-05-12_03-36-37,6,5500.0,P102,Laptop,4,1200.0,4800.0

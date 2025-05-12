@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-094d99,Mary,Davis,32,ORDER-3ef5cb,2025-05-12_03-32-31,7,2439.98,P101,Smartphone,2,799.99,1599.98
+CUST-094d99,Mary,Davis,32,ORDER-3ef5cb,2025-05-12_03-32-31,7,2439.98,P104,Men's Sneakers,2,120.0,240.0
+CUST-094d99,Mary,Davis,32,ORDER-3ef5cb,2025-05-12_03-32-31,7,2439.98,P108,Office Chair,3,200.0,600.0

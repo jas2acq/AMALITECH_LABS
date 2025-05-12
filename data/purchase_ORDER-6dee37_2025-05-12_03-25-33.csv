@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-5322b5,Helen,Grimsley,29,ORDER-6dee37,2025-05-12_03-25-33,8,1035.0,P107,Bluetooth Speaker,2,90.0,180.0
+CUST-5322b5,Helen,Grimsley,29,ORDER-6dee37,2025-05-12_03-25-33,8,1035.0,P108,Office Chair,3,200.0,600.0
+CUST-5322b5,Helen,Grimsley,29,ORDER-6dee37,2025-05-12_03-25-33,8,1035.0,P109,Wireless Earbuds,3,85.0,255.0

@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-a3c8d8,Bertha,Rivera,34,ORDER-b2a638,2025-05-12_03-33-23,11,870.0,P105,Women's Handbag,3,75.0,225.0
+CUST-a3c8d8,Bertha,Rivera,34,ORDER-b2a638,2025-05-12_03-33-23,11,870.0,P107,Bluetooth Speaker,3,90.0,270.0
+CUST-a3c8d8,Bertha,Rivera,34,ORDER-b2a638,2025-05-12_03-33-23,11,870.0,P105,Women's Handbag,5,75.0,375.0

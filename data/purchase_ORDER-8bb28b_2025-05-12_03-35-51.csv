@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-d58a4b,John,Hulsey,30,ORDER-8bb28b,2025-05-12_03-35-51,14,5680.0,P106,Gaming Console,3,350.0,1050.0
+CUST-d58a4b,John,Hulsey,30,ORDER-8bb28b,2025-05-12_03-35-51,14,5680.0,P102,Laptop,2,1200.0,2400.0
+CUST-d58a4b,John,Hulsey,30,ORDER-8bb28b,2025-05-12_03-35-51,14,5680.0,P106,Gaming Console,5,350.0,1750.0
+CUST-d58a4b,John,Hulsey,30,ORDER-8bb28b,2025-05-12_03-35-51,14,5680.0,P104,Men's Sneakers,3,120.0,360.0
+CUST-d58a4b,John,Hulsey,30,ORDER-8bb28b,2025-05-12_03-35-51,14,5680.0,P104,Men's Sneakers,1,120.0,120.0

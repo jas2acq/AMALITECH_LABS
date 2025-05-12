@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-3e3497,Harry,Walker,33,ORDER-29ed6b,2025-05-12_03-36-19,14,1175.0,P109,Wireless Earbuds,5,85.0,425.0
+CUST-3e3497,Harry,Walker,33,ORDER-29ed6b,2025-05-12_03-36-19,14,1175.0,P107,Bluetooth Speaker,5,90.0,450.0
+CUST-3e3497,Harry,Walker,33,ORDER-29ed6b,2025-05-12_03-36-19,14,1175.0,P105,Women's Handbag,4,75.0,300.0

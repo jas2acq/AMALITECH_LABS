@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-9a9100,Geraldine,Chio,25,ORDER-4969f5,2025-05-12_03-37-23,12,3979.96,P104,Men's Sneakers,4,120.0,480.0
+CUST-9a9100,Geraldine,Chio,25,ORDER-4969f5,2025-05-12_03-37-23,12,3979.96,P101,Smartphone,4,799.99,3199.96
+CUST-9a9100,Geraldine,Chio,25,ORDER-4969f5,2025-05-12_03-37-23,12,3979.96,P105,Women's Handbag,4,75.0,300.0

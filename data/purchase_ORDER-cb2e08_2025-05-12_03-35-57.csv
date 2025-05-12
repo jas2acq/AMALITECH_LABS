@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-b56756,Weston,Warren,34,ORDER-cb2e08,2025-05-12_03-35-57,15,1985.0,P109,Wireless Earbuds,1,85.0,85.0
+CUST-b56756,Weston,Warren,34,ORDER-cb2e08,2025-05-12_03-35-57,15,1985.0,P108,Office Chair,5,200.0,1000.0
+CUST-b56756,Weston,Warren,34,ORDER-cb2e08,2025-05-12_03-35-57,15,1985.0,P104,Men's Sneakers,5,120.0,600.0
+CUST-b56756,Weston,Warren,34,ORDER-cb2e08,2025-05-12_03-35-57,15,1985.0,P105,Women's Handbag,4,75.0,300.0

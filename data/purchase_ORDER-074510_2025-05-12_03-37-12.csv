@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-765194,Milton,Boone,38,ORDER-074510,2025-05-12_03-37-12,16,1770.0,P107,Bluetooth Speaker,4,90.0,360.0
+CUST-765194,Milton,Boone,38,ORDER-074510,2025-05-12_03-37-12,16,1770.0,P104,Men's Sneakers,3,120.0,360.0
+CUST-765194,Milton,Boone,38,ORDER-074510,2025-05-12_03-37-12,16,1770.0,P107,Bluetooth Speaker,5,90.0,450.0
+CUST-765194,Milton,Boone,38,ORDER-074510,2025-05-12_03-37-12,16,1770.0,P110,Fitness Tracker,4,150.0,600.0

@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-d4c1a9,Barbara,Butler,38,ORDER-7e1e99,2025-05-12_03-25-31,18,6139.95,P110,Fitness Tracker,5,150.0,750.0
+CUST-d4c1a9,Barbara,Butler,38,ORDER-7e1e99,2025-05-12_03-25-31,18,6139.95,P109,Wireless Earbuds,4,85.0,340.0
+CUST-d4c1a9,Barbara,Butler,38,ORDER-7e1e99,2025-05-12_03-25-31,18,6139.95,P105,Women's Handbag,2,75.0,150.0
+CUST-d4c1a9,Barbara,Butler,38,ORDER-7e1e99,2025-05-12_03-25-31,18,6139.95,P101,Smartphone,5,799.99,3999.95
+CUST-d4c1a9,Barbara,Butler,38,ORDER-7e1e99,2025-05-12_03-25-31,18,6139.95,P103,Digital Camera,2,450.0,900.0

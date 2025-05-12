@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-c3e12d,Ricky,Anguiano,33,ORDER-32c25e,2025-05-12_03-32-41,15,6124.95,P106,Gaming Console,1,350.0,350.0
+CUST-c3e12d,Ricky,Anguiano,33,ORDER-32c25e,2025-05-12_03-32-41,15,6124.95,P105,Women's Handbag,5,75.0,375.0
+CUST-c3e12d,Ricky,Anguiano,33,ORDER-32c25e,2025-05-12_03-32-41,15,6124.95,P106,Gaming Console,4,350.0,1400.0
+CUST-c3e12d,Ricky,Anguiano,33,ORDER-32c25e,2025-05-12_03-32-41,15,6124.95,P101,Smartphone,5,799.99,3999.95

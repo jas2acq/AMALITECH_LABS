@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-77b38d,Gary,Carson,24,ORDER-0dec88,2025-05-12_03-27-18,12,1470.0,P103,Digital Camera,1,450.0,450.0
+CUST-77b38d,Gary,Carson,24,ORDER-0dec88,2025-05-12_03-27-18,12,1470.0,P105,Women's Handbag,5,75.0,375.0
+CUST-77b38d,Gary,Carson,24,ORDER-0dec88,2025-05-12_03-27-18,12,1470.0,P104,Men's Sneakers,2,120.0,240.0
+CUST-77b38d,Gary,Carson,24,ORDER-0dec88,2025-05-12_03-27-18,12,1470.0,P109,Wireless Earbuds,3,85.0,255.0
+CUST-77b38d,Gary,Carson,24,ORDER-0dec88,2025-05-12_03-27-18,12,1470.0,P110,Fitness Tracker,1,150.0,150.0

@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-a4b55a,Brenton,Curbelo,24,ORDER-07698c,2025-05-12_03-26-51,9,2650.0,P106,Gaming Console,4,350.0,1400.0
+CUST-a4b55a,Brenton,Curbelo,24,ORDER-07698c,2025-05-12_03-26-51,9,2650.0,P103,Digital Camera,1,450.0,450.0
+CUST-a4b55a,Brenton,Curbelo,24,ORDER-07698c,2025-05-12_03-26-51,9,2650.0,P108,Office Chair,4,200.0,800.0

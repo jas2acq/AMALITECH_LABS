@@ -1,0 +1,105 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: fresh-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${PROJECT_DB_NAME}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ./sql/postgres_setup.sql:/docker-entrypoint-initdb.d/postgres_setup.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fresh-spark-network
+
+  spark-master:
+    image: bitnami/spark:3.5
+    container_name: fresh-spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORage_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+      - ./postgresql-42.7.5.jar:/opt/spark/jars/postgresql-42.7.5.jar
+    networks:
+      - fresh-spark-network
+
+  python-scripts:
+    image: python:3.10-slim
+    container_name: fresh-python-runner
+    volumes:
+      - ./src:/opt/spark/work-dir
+      - ./data:/opt/spark/data
+      - ./log:/app/log
+    working_dir: /opt/spark/work-dir
+    command: >
+      sh -c "pip install --no-cache-dir -r /opt/spark/work-dir/requirements.txt && python generator.py ${TIME_LIMIT}"
+    depends_on:
+      - postgres
+    networks:
+      - fresh-spark-network
+    environment:
+      - TIME_LIMIT=${TIME_LIMIT}
+
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: fresh-spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://fresh-spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORage_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./postgresql-42.7.5.jar:/opt/spark/jars/postgresql-42.7.5.jar
+      - ./src:/opt/spark/work-dir
+      - ./data:/opt/spark/data
+    networks:
+      - fresh-spark-network
+    command: >
+      sh -c "pip install --no-cache-dir -r /opt/spark/work-dir/requirements.txt && /opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://fresh-spark-master:7077"
+
+  spark-submit-job:
+    image: bitnami/spark:3.5
+    container_name: spark-streaming-job
+    volumes:
+      - ./src:/opt/spark/work-dir
+      - ./data:/opt/spark/data
+      - ./postgresql-42.7.5.jar:/opt/spark/jars/postgresql-42.7.5.jar
+      - ./log:/app/log
+    working_dir: /opt/spark/work-dir
+    command: >
+      spark-submit --master spark://fresh-spark-master:7077 --jars /opt/spark/jars/postgresql-42.7.5.jar spark_streaming_to_postgres.py
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_TABLE=${POSTGRES_TABLE}
+    ports:
+      - "4040:4040"
+    networks:
+      - fresh-spark-network
+    depends_on:
+      - spark-master
+      - postgres
+
+networks:
+  fresh-spark-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

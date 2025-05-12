@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-923c43,Terri,Wilson,23,ORDER-b725e4,2025-05-12_03-37-04,10,1250.0,P110,Fitness Tracker,3,150.0,450.0
+CUST-923c43,Terri,Wilson,23,ORDER-b725e4,2025-05-12_03-37-04,10,1250.0,P109,Wireless Earbuds,2,85.0,170.0
+CUST-923c43,Terri,Wilson,23,ORDER-b725e4,2025-05-12_03-37-04,10,1250.0,P110,Fitness Tracker,1,150.0,150.0
+CUST-923c43,Terri,Wilson,23,ORDER-b725e4,2025-05-12_03-37-04,10,1250.0,P104,Men's Sneakers,4,120.0,480.0

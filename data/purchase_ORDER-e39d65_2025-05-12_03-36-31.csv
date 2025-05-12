@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-550708,Shanna,Lawrence,38,ORDER-e39d65,2025-05-12_03-36-31,10,2875.0,P108,Office Chair,5,200.0,1000.0
+CUST-550708,Shanna,Lawrence,38,ORDER-e39d65,2025-05-12_03-36-31,10,2875.0,P103,Digital Camera,4,450.0,1800.0
+CUST-550708,Shanna,Lawrence,38,ORDER-e39d65,2025-05-12_03-36-31,10,2875.0,P105,Women's Handbag,1,75.0,75.0

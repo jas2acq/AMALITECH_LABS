@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-5125f7,Christinia,Beard,30,ORDER-ac389a,2025-05-12_03-32-01,10,4039.96,P107,Bluetooth Speaker,1,90.0,90.0
+CUST-5125f7,Christinia,Beard,30,ORDER-ac389a,2025-05-12_03-32-01,10,4039.96,P101,Smartphone,4,799.99,3199.96
+CUST-5125f7,Christinia,Beard,30,ORDER-ac389a,2025-05-12_03-32-01,10,4039.96,P110,Fitness Tracker,5,150.0,750.0

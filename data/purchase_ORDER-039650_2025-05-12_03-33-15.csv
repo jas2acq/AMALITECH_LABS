@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-9df60c,Anna,Kertis,20,ORDER-039650,2025-05-12_03-33-15,14,10050.0,P103,Digital Camera,4,450.0,1800.0
+CUST-9df60c,Anna,Kertis,20,ORDER-039650,2025-05-12_03-33-15,14,10050.0,P103,Digital Camera,5,450.0,2250.0
+CUST-9df60c,Anna,Kertis,20,ORDER-039650,2025-05-12_03-33-15,14,10050.0,P102,Laptop,2,1200.0,2400.0
+CUST-9df60c,Anna,Kertis,20,ORDER-039650,2025-05-12_03-33-15,14,10050.0,P102,Laptop,3,1200.0,3600.0

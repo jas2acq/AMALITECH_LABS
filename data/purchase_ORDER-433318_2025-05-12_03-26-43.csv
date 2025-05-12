@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,age,order_id,time_stamp,Total_quantity,Total_Price,product_id,Product_Name,quantity,Unit_Price,Total_Item_Price
+CUST-506d43,Theodore,Grosser,34,ORDER-433318,2025-05-12_03-26-43,4,360.0,P107,Bluetooth Speaker,4,90.0,360.0
