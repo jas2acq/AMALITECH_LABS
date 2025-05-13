@@ -1,0 +1,99 @@
+services:
+  zookeeper:
+    image: bitnami/zookeeper:3.8.3
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - kafka_network
+
+  kafka:
+    image: bitnami/kafka:3.6.1
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - kafka_network
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5433:5432" # Maps external port 5433 to internal port 5432
+    environment:
+      - POSTGRES_USER=kafkapostgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=heartbeat_db
+    volumes:
+      - ./sql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - kafka_network
+
+  producer:
+    image: python:3.10-slim
+    volumes:
+      - ./src:/app
+      - ./logs:/app/logs
+    working_dir: /app
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC=heartbeat_data
+      - TIME_LIMIT=120
+    command: >
+      sh -c "pip install -r /app/requirements.txt && python producer.py"
+    depends_on:
+      - kafka
+    networks:
+      - kafka_network
+
+  consumer:
+    image: python:3.10-slim
+    volumes:
+      - ./src:/app
+      - ./logs:/app/logs
+    working_dir: /app
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC=heartbeat_data
+      - KAFKA_CONSUMER_GROUP_ID=heartbeat_group
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=heartbeat_db
+      - POSTGRES_USER=kafkapostgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_PORT=5432 # Internal port for PostgreSQL in Docker
+    command: >
+      sh -c "pip install -r /app/requirements.txt && python consumer.py"
+    depends_on:
+      - kafka
+      - postgres
+    networks:
+      - kafka_network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - postgres
+    networks:
+      - kafka_network
+
+volumes:
+  postgres_data:
+  grafana_data:
+
+
+networks:
+  kafka_network:
+    driver: bridge

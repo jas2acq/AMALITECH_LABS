@@ -1,120 +1,48 @@
-# Kafka Heartbeat Data Pipeline
+# Real-Time Heartbeat Monitoring System
 
-This project demonstrates a real-time data pipeline using Apache Kafka, Python, and PostgreSQL. It simulates a stream of customer heartbeat data, ingests it into Kafka, consumes and processes it, and finally stores it in a relational database.
+## Overview
+This project implements a real-time heartbeat monitoring system using Kafka for streaming, PostgreSQL for storage, and Grafana for visualization. It focuses on tracking heart rate spikes and total record counts, deployed via Docker.
 
-The core components are:
+## Prerequisites
+- Docker and Docker Compose
+- Git
+- Internet access for pulling Docker images
 
-- **Synthetic Data Generator (`generator.py`)**: A Python script that generates random heartbeat data.
-- **Kafka Producer (`producer.py`)**: Handles the logic for sending data to a Kafka topic.
-- **Kafka Consumer (`consumer.py`)**: Reads data from the Kafka topic, performs basic processing, and writes it to PostgreSQL.
-- **Main Orchestration Script (`main.py`)**: Orchestrates the data generator and producer.
-- **Utility Functions (`utility.py`)**: Contains shared helper functions used across other Python scripts.
-- **Apache Kafka**: The distributed event streaming platform acting as the central message bus.
-- **Apache ZooKeeper**:Coordinates the Kafka brokers.
-- **PostgreSQL Database**: Stores the processed heartbeat data.
+## Setup Guide
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url>
+   cd heartbeat-monitoring-system
+   ```
+2. **Set Up Docker Environment**:
+   - Ensure Docker is running.
+   - Create a `docker-compose.yml` file (see project files or documentation for configuration).
+3. **Start Services**:
+   ```bash
+   docker-compose up --build -d
+   ```
+   This starts Zookeeper, Kafka, PostgreSQL, producer, consumer, and Grafana.
+4. **Verify Services**:
+   - Check container status: `docker-compose ps`.
+   - View logs: `docker logs <container-name>` (e.g., `fresh-kafka-producer-1`).
+5. **Access Grafana**:
+   - Open `http://localhost:3000` in a browser.
+   - Default login: `admin/admin`.
+6. **Configure Data Source**:
+   - In Grafana, add a PostgreSQL data source named `HeartbeatDB` (UID `felo4ssnstji8c`).
+   - Settings: Host `postgres:5432`, Database `heartbeat_db`, User `kafkapostgres`, Password `12345`.
+7. **Import Dashboard**:
+   - Go to **Create** > **Import**.
+   - Upload `grafana_dashboard.json` (provided earlier) or paste its JSON.
+   - Select `HeartbeatDB` as the data source.
 
-The project is organized into the following directories and files:
+## Documentation
+- **Project Overview**: See `project_overview.md` for system components and data flow.
+- **User Guide**: See `user_guide.md` for step-by-step instructions to run the project.
+- **Test Cases**: See `test_cases.md` for manual test plans.
+- **Performance Metrics**: See `performance_metrics.md` for latency and throughput data.
 
-```
-kafka-heartbeat-project/
-├── docker/
-│   └── docker-compose.yml    # Defines Kafka, Zookeeper, and PostgreSQL services
-├── src/
-│   ├── generator.py          # Generates synthetic heartbeat data
-│   ├── producer.py           # Handles sending data to Kafka
-│   ├── consumer.py           # Reads from Kafka, processes, and writes to DB
-│   ├── main.py               # Orchestrates the data generation and production
-│   └── utility.py            # Contains shared helper functions
-├── sql/
-│   └── create_table.sql      # SQL script to create the database table
-├── .gitignore                # Specifies intentionally untracked files that Git should ignore
-└── README.md                 # Project documentation (this file)
-```
-
-_Architecture Diagram: (We will add a diagram here later to visualize the flow)_
-
-Before you begin, ensure you have the following installed on your system:
-
-- **Docker**: [Get Docker](https://www.docker.com/)
-- **Docker Compose**: (Usually comes bundled with Docker Desktop, otherwise follow [Compose installation instructions](https://docs.docker.com/compose/install/))
-- **Python 3.6+**: [Python Downloads](https://www.python.org/downloads/)
-- **venv module** (usually included with Python 3.3+): For creating virtual environments
-
----
-
-## Getting Started
-
-Follow these steps to set up the project locally and start the core infrastructure.
-
-### 1. Clone the Repository
-
-First, clone this repository to your local machine:
-
-```bash
-git clone  # Replace  with the actual URL
-cd kafka-heartbeat-project
-```
-
-### 2. Set up a Python Virtual Environment
-
-It's highly recommended to use a virtual environment to manage project dependencies.
-
-```bash
-python -m venv .venv
-```
-
-Activate the virtual environment:
-
-- On macOS and Linux:
-    ```bash
-    source .venv/bin/activate
-    ```
-- On Windows:
-    ```bash
-    .venv\Scripts\activate
-    ```
-
-Your terminal prompt should now indicate that you are in the virtual environment (e.g., `(.venv) kafka-heartbeat-project$`).
-
-### 3. Install Python Dependencies
-
-We will install the necessary Python libraries for Kafka and PostgreSQL interaction later when we develop the Python scripts. For now, just ensure your virtual environment is active.
-
-### 4. Set up and Start Infrastructure with Docker Compose
-
-We have created the `docker/docker-compose.yml` file which defines the services needed for this project (Kafka, ZooKeeper, and PostgreSQL). Navigate to the docker directory and start the containers using Docker Compose:
-
-```bash
-cd docker
-docker-compose up -d
-```
-
-- `docker-compose up`: Builds (if necessary) and starts the services defined in `docker-compose.yml`.
-- `-d`: Runs the containers in detached mode (in the background).
-
-This command will download the necessary Docker images and start the containers for Kafka, ZooKeeper, and PostgreSQL. This may take some time the first time you run it.
-
-You can check the status of the running containers with:
-
-```bash
-docker-compose ps
-```
-
-You should see output indicating that the zookeeper, kafka, and postgres services are running.
-
-### 5. Stop the Infrastructure
-
-When you are finished working, you can stop the containers:
-
-```bash
-cd docker # Make sure you are in the docker directory
-docker-compose down
-```
-
-This will stop and remove the containers, networks, and volumes created by `up`.
-
----
-
-Continue to the next sections of the README for developing the data generator, producer, consumer, and database schema.
-
----
+## Troubleshooting
+- **No Data in Grafana**: Check PostgreSQL data (`SELECT * FROM heartbeat_data LIMIT 10;`), Kafka logs, and consumer logs.
+- **Service Fails**: Restart with `docker-compose restart <service-name>`.
+- **Network Issues**: Ensure all containers are on the same Docker network (`heartbeat-network`).
