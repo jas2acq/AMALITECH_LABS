@@ -1,0 +1,7 @@
+pyspark
+requests
+python-dotenv
+pandas
+matplotlib
+seaborn
+py4j==0.10.9.7
