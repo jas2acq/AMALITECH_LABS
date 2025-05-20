@@ -1,0 +1,154 @@
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.8.1-python3.10
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@postgres:5432/${AIRFLOW_DB_NAME}
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+    _AIRFLOW_WWW_USER_CREATE: 'true'
+    _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+    _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+    _AIRFLOW_DB_MIGRATE: 'true'
+    _PIP_ADDITIONAL_REQUIREMENTS: ''
+    FLIGHT_DB_USER: ${FLIGHT_DB_USER}
+    FLIGHT_DB_PASSWORD: ${FLIGHT_DB_PASSWORD}
+    FLIGHT_DB_NAME: ${FLIGHT_DB_NAME}
+    FLIGHT_DB_HOST: ${FLIGHT_DB_HOST}
+    DATA_RAW_DIR: ${DATA_RAW_DIR}
+    DATA_PROCESSED_DIR: ${DATA_PROCESSED_DIR} # Reference from .env
+    DATA_KPI_OUTPUTS_DIR: ${DATA_KPI_OUTPUTS_DIR} # Reference from .env
+    POSTGRES_ANALYTICS_DB: ${POSTGRES_ANALYTICS_DB}
+    POSTGRES_ANALYTICS_USER: ${POSTGRES_ANALYTICS_USER}
+    POSTGRES_ANALYTICS_PASSWORD: ${POSTGRES_ANALYTICS_PASSWORD}
+    POSTGRES_ANALYTICS_HOST: ${POSTGRES_ANALYTICS_HOST}
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - ./data/raw:/opt/airflow/data/raw
+    - ./data/processed:/opt/airflow/data/processed
+    - ./data/kpi_outputs:/opt/airflow/data/kpi_outputs # New mount for KPI outputs
+    - ./.env:/opt/airflow/.env
+    - ./requirements.txt:/opt/airflow/requirements.txt
+  user: "${AIRFLOW_UID}:0"
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: airflow-postgres
+    environment:
+      - POSTGRES_USER=${AIRFLOW_DB_USER}
+      - POSTGRES_PASSWORD=${AIRFLOW_DB_PASSWORD}
+      - POSTGRES_DB=${AIRFLOW_DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_db_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${AIRFLOW_DB_USER} -d ${AIRFLOW_DB_NAME} && psql -U ${AIRFLOW_DB_USER} -d ${AIRFLOW_DB_NAME} -c 'SELECT 1'" ]
+      interval: 5s
+      retries: 10
+      timeout: 5s
+    restart: always
+    networks:
+      - airflow_network
+
+  mysql-flight:
+    image: mysql:5.7
+    container_name: airflow-mysql-flight
+    environment:
+      - MYSQL_ROOT_PASSWORD=${FLIGHT_DB_PASSWORD} # Dynamic from .env
+      - MYSQL_USER=${FLIGHT_DB_USER} # Dynamic from .env
+      - MYSQL_PASSWORD=${FLIGHT_DB_PASSWORD} # Dynamic from .env
+      - MYSQL_DATABASE=${FLIGHT_DB_NAME} # Dynamic from .env
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_flight_volume:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${FLIGHT_DB_USER}", "-p${FLIGHT_DB_PASSWORD}" ] # Dynamic from .env
+      interval: 5s
+      retries: 10
+      timeout: 5s
+    restart: always
+    networks:
+      - airflow_network
+
+  postgres-analytics:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${POSTGRES_ANALYTICS_DB} # Dynamic from .env
+      POSTGRES_USER: ${POSTGRES_ANALYTICS_USER} # Dynamic from .env
+      POSTGRES_PASSWORD: ${POSTGRES_ANALYTICS_PASSWORD} # Dynamic from .env
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_analytics_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_ANALYTICS_USER} -d ${POSTGRES_ANALYTICS_DB}" ] # Dynamic from .env
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - airflow_network
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: airflow-webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8080/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    networks:
+      - airflow_network
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: airflow-scheduler
+    command: scheduler
+    healthcheck:
+      test: [ "CMD-SHELL", "airflow jobs check --job-type SchedulerJob --local" ]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+    restart: always
+    networks:
+      - airflow_network
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: airflow-init
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        python -m pip install --upgrade pip &&
+        pip install --no-cache-dir -r /opt/airflow/requirements.txt &&
+        /entrypoint airflow version
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: 'true'
+    networks:
+      - airflow_network
+
+volumes:
+  postgres_db_volume:
+  mysql_flight_volume:
+  pg_analytics_data:
+    # Named volumes for data persistence (if using, otherwise bind mounts are sufficient)
+    # flight_processed_data: # Uncomment if you prefer a named volume over bind mount for processed data
+    # flight_kpi_outputs:    # Uncomment if you prefer a named volume over bind mount for kpi outputs
+
+networks:
+  airflow_network:
+    driver: bridge
